@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/view/list_item_view.dart';
 import 'package:shopping/view_model/shopping_view_model.dart';

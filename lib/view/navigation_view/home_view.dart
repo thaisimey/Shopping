@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/model/item.dart';
+import 'package:shopping/view/cart_view.dart';
 import 'package:shopping/view_model/shopping_view_model.dart';
 
 import '../../view_state.dart';
@@ -89,18 +90,22 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
                                         ),
                                       ),
                                       Positioned(
-                                        top: 20,
-                                        right: 10,
+                                        top: 22,
+                                        right: 8,
                                         child: Container(
-                                          height: 25,
-                                          width: 25,
+                                          height: 40,
+                                          width: 40,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(40),
                                             border: Border.all(color: Colors.greenAccent),
                                           ),
                                         ),
                                       ),
+                                      Positioned(
+                                        top: 33,
+                                          right: 22,
+                                          child: Text("5",style: TextStyle(fontSize: 17),)),
                                     ],
                                   ),
                                 ),
@@ -156,6 +161,7 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
                           backgroundColor: Colors.black,
                           heroTag: null,
                           onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CartView()));
                           },
                           tooltip: 'multiplication',
                           child: Icon(Icons.shopping_cart,color: Colors.white,),
