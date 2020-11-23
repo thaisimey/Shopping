@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Shopping',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
+        fontFamily: 'Concert One',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: ListItemsView(),
