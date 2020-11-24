@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping/main.dart';
 import 'package:shopping/model/item.dart';
@@ -18,6 +23,10 @@ class HomeView extends StatefulWidget {
 
 class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
 
+  String _connectionStatus = 'Unknown';
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   Color outlineColor = deactiveColor;
 
   void updateOutlineColor(bool outline) {
@@ -33,10 +42,48 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ShoppingViewModel>(context, listen: false).getData();
     });
+
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+
+  Future<void> initConnectivity() async {
+    ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print(e.toString());
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+      case ConnectivityResult.mobile:
+      case ConnectivityResult.none:
+        setState(() => _connectionStatus = result.toString());
+        break;
+      default:
+        setState(() => _connectionStatus = 'Failed to get connectivity.');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
         body: SafeArea(
           child: Column(
             children: [
@@ -50,6 +97,26 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
                 child: Expanded(
                   child: Stack(
                     children: [
+                      Selector<ConnectivityResult, bool>(
+                          selector: (context, connectivity) => connectivity != ConnectivityResult.none,
+                          builder: (_, value, ___) {
+                            print("connectivity $value");
+                            if(value == false) {
+                              return Flushbar(
+                                message: "no internet",
+                                icon: Icon(
+                                  Icons.info_outline,
+                                  size: 28.0,
+                                  color: Colors.blue[300],
+                                ),
+                                duration: Duration(seconds: 3),
+                                leftBarIndicatorColor: Colors.blue[300],
+                              )..show(context);
+                            } else {
+                              return SizedBox.shrink();
+                            }
+                          }
+                      ),
                       Consumer<ShoppingViewModel>(builder: (BuildContext context, value, Widget child) {
                         return Center(
                           child: GridView.builder(
@@ -189,7 +256,7 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
                         child: Stack(
                           children: [
                             FloatingActionButton(
-                              backgroundColor: Colors.black,
+                              backgroundColor: Theme.of(context).primaryColor,
                               heroTag: null,
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => CartView()));
@@ -239,6 +306,8 @@ class _HomeWiewState extends State<HomeView> with AutomaticKeepAliveClientMixin{
   // int checkPrice(List<Item> mainList, Item cateItem) {
   //   return mainList[mainList.indexWhere((element) => element.id == cateItem.id)].amount;;
   // }
+
+
 
   @override
   // TODO: implement wantKeepAlive

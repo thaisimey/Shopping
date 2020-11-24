@@ -88,8 +88,9 @@ class ShoppingViewModel extends ChangeNotifier {
     List<Item> temp = cartList.where((element) => element.isSelect == true).toList();
     temp.forEach((element) {
       eachtotal = element.amount * element.price;
+      total += eachtotal;
     });
-    total += eachtotal;
+
 
     return total;
 

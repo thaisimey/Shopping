@@ -84,113 +84,115 @@ class _CartViewState extends State<CartView> {
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            child: Row(
+                                            child: Expanded(
+                                              child: Row(
 
-                                              children: [
-                                                Container(
-                                                  height: 150,
-                                                  width: 90,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.orange),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            value
-                                                                .cartList[index]
-                                                                .image),
-                                                      )),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left: 5),
-                                                  child: Container(
-                                                    width: 170,
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Align(
-                                                          alignment: Alignment.centerLeft,
-                                                          child: Text(
-                                                            value
-                                                                .cartList[index].name,
-                                                            style: TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight.bold),
+                                                children: [
+                                                  Container(
+                                                    height: 150,
+                                                    width: 90,
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: Colors.orange),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                15),
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              value
+                                                                  .cartList[index]
+                                                                  .image),
+                                                        )),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 5),
+                                                    child: Container(
+                                                      width: 160,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment.centerLeft,
+                                                            child: Text(
+                                                              value
+                                                                  .cartList[index].name,
+                                                              style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight.bold),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(height: 10,),
-                                                        Align(
-                                                          alignment: Alignment.centerLeft,
-                                                          child: Text(
-                                                              "\$ ${value.cartList[index].price}"),
-                                                        ),
-                                                      ],
+                                                          SizedBox(height: 10,),
+                                                          Align(
+                                                            alignment: Alignment.centerLeft,
+                                                            child: Text(
+                                                                "\$ ${value.cartList[index].price}"),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
 
 
-                                                SizedBox(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: FloatingActionButton(
-                                                    heroTag: null,
-                                                    child: Icon(Icons.remove,
-                                                        color: Colors.black87),
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    onPressed: () {
-                                                      if (value.cartList[index]
-                                                              .amount <=
-                                                          1) {
-                                                        value.updateOutline(
-                                                            index: index,
-                                                            value: value
-                                                                .cartList[index]
-                                                                .isSelect);
-                                                        value.remove(
-                                                            index: index,
-                                                            value: value
-                                                                .cartList[index]
-                                                                .isSelect);
-                                                      } else {
-                                                        value.decreaseItem(
+                                                  SizedBox(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: FloatingActionButton(
+                                                      heroTag: null,
+                                                      child: Icon(Icons.remove,
+                                                          color: Colors.black87),
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      onPressed: () {
+                                                        if (value.cartList[index]
+                                                                .amount <=
+                                                            1) {
+                                                          value.updateOutline(
+                                                              index: index,
+                                                              value: value
+                                                                  .cartList[index]
+                                                                  .isSelect);
+                                                          value.remove(
+                                                              index: index,
+                                                              value: value
+                                                                  .cartList[index]
+                                                                  .isSelect);
+                                                        } else {
+                                                          value.decreaseItem(
+                                                              index,
+                                                              value
+                                                                  .cartList[index]
+                                                                  .amount);
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets.all(8.0),
+                                                    child: Text(value
+                                                        .cartList[index].amount
+                                                        .toString()),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: FloatingActionButton(
+                                                      heroTag: null,
+                                                      child: Icon(Icons.add,
+                                                          color: Colors.black87),
+                                                      backgroundColor:
+                                                      Colors.white,
+                                                      onPressed: () {
+                                                        value.increaseItem(
                                                             index,
-                                                            value
-                                                                .cartList[index]
+                                                            value.cartList[index]
                                                                 .amount);
-                                                      }
-                                                    },
+                                                      },
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                  const EdgeInsets.all(8.0),
-                                                  child: Text(value
-                                                      .cartList[index].amount
-                                                      .toString()),
-                                                ),
-                                                SizedBox(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: FloatingActionButton(
-                                                    heroTag: null,
-                                                    child: Icon(Icons.add,
-                                                        color: Colors.black87),
-                                                    backgroundColor:
-                                                    Colors.white,
-                                                    onPressed: () {
-                                                      value.increaseItem(
-                                                          index,
-                                                          value.cartList[index]
-                                                              .amount);
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         )

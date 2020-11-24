@@ -36,6 +36,8 @@ dependencies:
   provider: ^4.3.2+2
   hexcolor: ^1.0.6
   bottom_personalized_dot_bar: ^1.0.2
+  flushbar: ^1.10.4
+  connectivity: ^2.0.2
 
 dev_dependencies:
   flutter_test:
